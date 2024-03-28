@@ -1,3 +1,5 @@
+from matplotlib import pyplot as plt
+import numpy as np
 
 def cond_prob(sensitivity, specificity, prevalence):
 
@@ -35,5 +37,29 @@ if __name__ == '__main__':
 
     chanceVal = cond_prob(sens, spec, prev)
     print(f"\nThe probability of being truly infected is {chanceVal:.2f}")
+
+    # Plotting results using set values
+    prev_vals = np.linspace(0.00001, 0.5, 100)
+    spec_vals = [99, 99.9, 99.99, 99.999]
+
+    prob_matrix = np.zeros((len(prev_vals), len(spec_vals)))
+    for i, prevalence in enumerate(prev_vals):
+        for j, specificity in enumerate(spec_vals):
+            prob_matrix[i, j] = cond_prob(0.99, specificity, prevalence) # Fixed sensitivity value of 99
+
+    plt.figure(figsize =(10, 6))
+    for j, specificity in enumerate(spec_vals):
+        plt.plot(prev_vals * 100 , prob_matrix[:, j],
+                 label=f'Specificity = {specificity}%')
+        plt.xlabel('Infection Prevalence(%)')
+        plt.ylabel('Prob of infection | post test')
+        plt.title('Prob of infection vs. Prevalence')
+        plt.legend()
+        plt.grid(True)
+        plt.show()
+
+
+
+
 
 
