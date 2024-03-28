@@ -9,7 +9,7 @@ def cond_prob(sensitivity, specificity, prevalence):
     probNegTest_gNotInf = specificity / 100
     probPosTest = (probPosTest_gInf * probInf) + ((1 - probNegTest_gNotInf) * (1 - probInf))
 
-    # Handlind division by zero
+    # Handling division by zero
     if probPosTest == 0:
         raise ValueError("The denominator is zero.\nSensivity and specificity values may be invalid")
 
